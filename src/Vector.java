@@ -1,8 +1,15 @@
 
 public class Vector {
-	int v[];
-	 Vector (int dimension){
-		 v= new int[dimension];
-	 }
-
+	
+	public int vector[];
+	
+	//first constructor
+	public Vector(int dimension) {
+		this.vector = new int[dimension];
+	}
+	
+	//second constructor
+	public Vector(double[] array, int dimension) {
+		
+	}
 }
