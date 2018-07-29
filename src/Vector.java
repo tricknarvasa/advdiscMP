@@ -15,7 +15,7 @@ public class Vector {
 		if(array.length != dimension){
 			System.out.print("size incompatible");
 		}
-		else{
+		else if(array.length == dimension ){
 		this.vector = new double[dimension];
 		
 		for(int i=0; i<dimension;i++)
