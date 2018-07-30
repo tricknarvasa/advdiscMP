@@ -83,13 +83,67 @@ public class Vector {
 		return this;
 	}
 	
+	
+	
 	public static Vector Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
 		
 		Vector finalanswer= new Vector(dimension);
+		double matrix[][]=new double[dimension][dimension+1];
+		double x=0,temp;
+		int pointer, k=0;
+		//transform into matrix
+		for(int i=0; i<=dimension; i++){
+			if(i== dimension){
+				for(int j=0; j<dimension; j++)
+				matrix[j][i]=constants.getVector(j);
+			}
+			else if(i<dimension){
+			for(int j=0; j<dimension; j++){
+				matrix[j][i]= vectors.get(i).getVector(j);
+				}
+			}
+		}
 		
+		//Gauss Jordan Operation
+		for(int i=0;i<dimension; i++){
+			
+			if(matrix[i][i]==0){
+				pointer=1;
+				while(matrix[i+pointer][i]==0 && (i+pointer)<dimension)
+					pointer+=1;
+				if(i+pointer == dimension)
+					break;
+				
+				for(int j= i; k<=dimension; k++){
+					temp= matrix[j][k];
+					matrix[j][k] = matrix[j+pointer][k];
+					matrix[j+pointer][k]= temp;
+					
+				}
+			}
+			//Reduced Matrix
+			for(int j=0;j<dimension; j++){
+				
+				if(j!= i){
+					x= matrix[j][i] / matrix[i][i];
+					
+				}
+				for(int y=0; y<=dimension;y++){
+					matrix[j][y]-= (matrix[i][y]* x);
+			}
+		}
+		
+		
+		
+		
+		
+			}
+		//transfer final solution
+		for(int i=0; i<dimension; i++){
+			finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
+		}
 		return finalanswer;
 	}
-
 
 	public double getVector(int index) {
 		return vector[index];
