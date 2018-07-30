@@ -33,4 +33,11 @@ public class Vector {
 		}
 	
 	}
+	
+	public void add(Vector addend) {
+		
+		for (int i = 0; i < addend.dimension; i++) {
+			this.vector[i] += addend.vector[i];
+		}
+	}
 }
