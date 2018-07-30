@@ -8,5 +8,7 @@ public class Driver {
 		double[] array = {1,2,3,4,5};
 		Vector rotvec = new Vector(array, array.length);
 		rotvec.add(rotvec);
+		
+		rotvec.scale(array[1]);
 	}
 }
