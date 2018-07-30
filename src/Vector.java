@@ -85,7 +85,7 @@ public class Vector {
 	
 	
 	
-	public static Vector Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
+	public Vector Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
 		
 		Vector finalanswer= new Vector(dimension);
 		double matrix[][]=new double[dimension][dimension+1];
@@ -143,6 +143,11 @@ public class Vector {
 			finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
 		}
 		return finalanswer;
+	}
+	public void printVector(){
+		for(int i=0; i< dimension; i++){
+			System.out.println(this.vector[i]);
+		}
 	}
 
 	public double getVector(int index) {
