@@ -1,4 +1,4 @@
-import java.util.*;
+
 public class Vector {
 	
 	private double[] vector;
@@ -84,15 +84,6 @@ public class Vector {
 	}
 	
 
-	//Vector Gauss-Jordan
-	public static Vector Gauss_Jordan(List<Vector> vectors, int dimension, Vector constants) {
-	
-			Vector solution=new Vector(dimension);
-			
-			return solution;
-			
-		
-	}
 
 	public double getVector(int index) {
 		return vector[index];
