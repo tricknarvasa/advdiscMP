@@ -122,6 +122,7 @@ public class Vector {
 				}
 			}
 			//Reduced Matrix
+			//row echolon form
 			for(int j=0;j<dimension; j++){
 				
 				if(j!= i){
@@ -144,6 +145,7 @@ public class Vector {
 		}
 		return finalanswer;
 	}
+	//print
 	public void printVector(){
 		for(int i=0; i< dimension; i++){
 			System.out.println(this.vector[i]);
