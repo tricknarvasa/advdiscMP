@@ -38,8 +38,9 @@ public class Vector {
 	}
 	
 	//Vector Scale
-	public void scale(double scalar){
+	public Vector scale(double scalar){
 		System.out.println("Vector Scale:");
+		
 		//printing of values before scaling
 		System.out.println("Before:");
 		for (int i = 0; i < this.dimension; i++) {
@@ -47,9 +48,8 @@ public class Vector {
 		}
 		System.out.println();
 		
-		for (int i = 0; i < this. dimension; i++) {
+		for (int i = 0; i < this.dimension; i++)
 			this.vector[i] *= scalar;
-		}
 		
 		//printing of values after scaling
 		System.out.println("After");
@@ -57,10 +57,12 @@ public class Vector {
 			System.out.println(this.vector[i]);
 		}
 		System.out.println();
+		
+		return this;
 	}
 	
 	//Vector Add
-	public void add(Vector addend) {
+	public Vector add(Vector addend) {
 		System.out.println("Vector Add:");
 		
 		//printing of values before adding
@@ -69,13 +71,35 @@ public class Vector {
 			System.out.println(addend.vector[i]);
 		System.out.println();
 		
-		for (int i = 0; i < addend.dimension; i++)
+		for (int i = 0; i < this.dimension; i++)
 			this.vector[i] += addend.vector[i];
 		
 		//printing of values after adding
 		System.out.println("After:");
 		for (int i = 0; i < addend.dimension; i++)
-			System.out.println(addend.vector[i]);
+			System.out.println(this.vector[i]);
 		System.out.println();
+		
+		return this;
+	}
+
+	public double getVector(int index) {
+		return vector[index];
+	}
+	
+	public double[] getVector() {
+		return vector;
+	}
+
+	public void setVector(double vector, int index) {
+		this.vector[index] = vector;
+	}
+
+	public int getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(int dimension) {
+		this.dimension = dimension;
 	}
 }
