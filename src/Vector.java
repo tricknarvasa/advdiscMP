@@ -26,18 +26,20 @@ public class Vector {
 		}
 	}
 	
-	public void scale(double scalar){
+	public Vector scale(double scalar){
 		
 		for(int i=0; i<dimension;i++){
 			this.vector[i]= (this.vector[i] * scalar);
 		}
-	
+		return this;
 	}
 	
-	public void add(Vector addend) {
+	public Vector add(Vector addend) {
 		
 		for (int i = 0; i < addend.dimension; i++) {
 			this.vector[i] += addend.vector[i];
 		}
+		
+		return this;
 	}
 }
