@@ -1,25 +1,37 @@
 
 public class Vector {
 	
-	public double vector[];
+	public double[] vector;
+	public int dimension;
 	
-	//first constructor
 	public Vector(int dimension) {
 		this.vector = new double[dimension];
-		for(int i=0; i<dimension;i++)
-			vector[i]=0;
+		
+		//checking
+//		for (int i = 0; i < dimension; i++) {
+//			System.out.println(this.vector[i]);
+//		}
 	}
 	
-	//second constructor
 	public Vector(double[] array, int dimension) {
-		if(array.length != dimension){
-			System.out.print("size incompatible");
-		}
-		else if(array.length == dimension ){
-		this.vector = new double[dimension];
-		
-		for(int i=0; i<dimension;i++)
-			vector[i]= array[i];
-		}
+		this.vector = array;
+		this.dimension = dimension;
 	}
+
+	public double[] getVector() {
+		return vector;
+	}
+
+	public void setVector(double[] vector) {
+		this.vector = vector;
+	}
+	
+	public int getDimension() {
+		return dimension;
+	}
+	
+	public void setDimension(int dimension) {
+		this.dimension = dimension;
+	}
+	
 }
