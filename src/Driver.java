@@ -5,8 +5,8 @@ public class Driver {
 		
 //		Vector vector = new Vector(5);
 //				
-//		double[] array = {1,2,3,4,5};
-//		Vector rotvec = new Vector(array, array.length);
-
+		double[] array = {1,2,3,4,5};
+		Vector rotvec = new Vector(array, array.length);
+		rotvec.add(rotvec);
 	}
 }

@@ -10,6 +10,7 @@ public class Vector {
 		System.out.println("Making new vector:");
 		
 		this.vector = new double[dimension];
+		this.dimension = dimension;
 		
 		//checking
 		for (int i = 0; i < dimension; i++)
@@ -26,6 +27,7 @@ public class Vector {
 			System.out.println("Making new vector:");
 			
 			this.vector = array;
+			this.dimension = dimension;
 			
 			//checking
 			for (int i = 0; i < dimension; i++)
@@ -34,5 +36,16 @@ public class Vector {
 		}
 		
 	}
-
+	
+	//Vector Add
+	public void add(Vector addend) {
+		for (int i = 0; i < addend.dimension; i++)
+			System.out.println(addend.vector[i]);
+		
+		for (int i = 0; i < addend.dimension; i++)
+			this.vector[i] += addend.vector[i];
+		
+		for (int i = 0; i < addend.dimension; i++)
+			System.out.println(addend.vector[i]);
+	}
 }
