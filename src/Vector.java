@@ -1,4 +1,8 @@
+//EMBESTRO, Eric
+//NARVASA, Patrick
+//ADVDISC S18 MP 1
 import java.util.*;
+
 public class Vector {
 	
 	private double[] vector;
