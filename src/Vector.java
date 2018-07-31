@@ -145,11 +145,28 @@ public class Vector {
 		}
 		return finalanswer;
 	}
+	
 	//print
 	public void printVector(){
 		for(int i=0; i< dimension; i++){
 			System.out.println(this.vector[i]);
 		}
+	}
+	
+	public int span(ArrayList<Vector> vectors, int dimension) {
+		int span = vectors.size();
+		
+		for (int i = 0; i < span; i++) {
+			boolean isNonZero = true;
+			for (int j = 0; j < vectors.get(i).getDimension(); j++)
+				if (vectors.get(i).getVector(j) == 0 && isNonZero == true) {
+					isNonZero = false;
+					span--;
+				}
+		}
+			
+		
+		return span;
 	}
 
 	public double getVector(int index) {

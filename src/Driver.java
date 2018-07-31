@@ -15,6 +15,7 @@ public class Driver {
 		Vector B= new Vector (b,3);
 		Vector C= new Vector(c,3);
 		Vector D= new Vector(d,3);
+		
 		//Vector that will contain solution for Gauss Jordan
 		Vector Solution= new Vector(3);
 		//Adding Vectors in List arrangement below:
@@ -31,7 +32,6 @@ public class Driver {
 		Solution=Solution.Gauss_Jordan(vectors, 3, D);
 		
 		Solution.printVector();
-		
 		
 	}
 }
