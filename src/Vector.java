@@ -123,31 +123,26 @@ public class Vector {
 					matrix[j][k] = matrix[j+pointer][k];
 					matrix[j+pointer][k]= temp;
 					
-				}
-			}
-			//Reduced Matrix
-			//row echolon form
-			for(int j=0;j<dimension; j++){
+							}
+					}
+				//Reduced Matrix
+				//row echolon form
+				for(int j=0;j<dimension; j++){
 				
-				if(j!= i){
-					x= matrix[j][i] / matrix[i][i];
+					if(j!= i){
+						x= matrix[j][i] / matrix[i][i];
 					
+					}
+					for(int y=0; y<=dimension;y++){
+						matrix[j][y]-= (matrix[i][y]* x);
+					}
 				}
-				for(int y=0; y<=dimension;y++){
-					matrix[j][y]-= (matrix[i][y]* x);
-			}
-		}
-		
-		
-		
-		
-		
 			}
 		//transfer final solution
-		for(int i=0; i<dimension; i++){
-			finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
-		}
-		return finalanswer;
+				for(int i=0; i<dimension; i++){
+					finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
+				}
+				return finalanswer;
 	}
 	
 	//print
