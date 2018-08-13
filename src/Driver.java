@@ -4,9 +4,9 @@ public class Driver {
 	public static void main(String[] args) {
 		//list 
 		double[] a= new double[]{1,1,2};
-		double[] b= new double[]{2,4,-3};
-		double[] c= new double[]{3,6,-5};
-		double[] d= new double[]{9,1,0};
+		double[] b= new double[]{3,-2,1};
+		double[] c= new double[]{1,-1,2};
+		double[] d= new double[]{10,-6,10};
 		
 		//arraylist of vectors
 		ArrayList<Vector> vectors= new ArrayList<Vector>();
@@ -20,7 +20,7 @@ public class Driver {
 		Vector Solution= new Vector(3);
 		//Adding Vectors in List arrangement below:
 		// [1 3  1]
-		// [1 -2 -1]
+		// [1 -2 2]
 		// [2 1  2]
 		vectors.add(A);
 		vectors.add(B);
