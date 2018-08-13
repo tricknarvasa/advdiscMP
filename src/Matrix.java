@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Matrix {
 
@@ -54,41 +55,121 @@ public class Matrix {
 		return this;
 	}
 	
+	//Gauss Jordan Matrix
+	public static boolean isSolvable (List<Vector> vectors, Vector constants) {
+		if (vectors.size() == constants.getVector().length)
+			return true;
+		else
+			return false;
+	}
+	
+	
+	public double[][] Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
+		
+		
+		double matrix[][]=new double[dimension][dimension+1];
+		double x=0,temp;
+		int pointer, k=0;
+		if(isSolvable(vectors, constants)){
+		//transform into matrix
+		for(int i=0; i<=dimension; i++){
+			if(i== dimension){
+				for(int j=0; j<dimension; j++)
+				matrix[j][i]=constants.getVector(j);
+			}
+			else if(i<dimension){
+			for(int j=0; j<dimension; j++){
+				matrix[i][j]= vectors.get(i).getVector(j);
+				}
+			}
+		}
+		
+		//Gauss Jordan Operation
+		for(int i=0;i<dimension; i++){
+			
+			if(matrix[i][i]==0){
+				pointer=1;
+				while(matrix[i+pointer][i]==0 && (i+pointer)<dimension)
+					pointer+=1;
+				if(i+pointer == dimension)
+					break;
+				
+				for(int j= i; k<=dimension; k++){
+					temp= matrix[j][k];
+					matrix[j][k] = matrix[j+pointer][k];
+					matrix[j+pointer][k]= temp;
+					
+							}
+					}
+				//Reduced Matrix
+				//row echolon form
+				for(int j=0;j<dimension; j++){
+				
+					if(j!= i){
+						x= matrix[j][i] / matrix[i][i];
+					
+					}
+					for(int y=0; y<=dimension;y++){
+						matrix[j][y]-= (matrix[i][y]* x);
+					}
+				}
+			}
+				
+		//transfer final solution
+				return matrix;
+		}
+		else return null;
+	}
 	public double det() {
 		double determinant = 0;
-		
+		Vector tempCon= new Vector(dimension);
+		double[][] matrix;
 		//TODO Gauss Jordan
-		
-		
+		matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
+		this.printMatrix(matrix);
 		//TODO Getting determinant
 		//BaseCase 1
 		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1) {
-			determinant = this.getVectors(0).getVector(0);
+			determinant = matrix[0][0];
 		}
 		//BaseCase 2
 		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 2) {
 			double ad, bc;
-			ad = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1);
-			bc = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0);
+			ad = matrix[0][0] * matrix[1][1];
+			bc =matrix[0][1]*matrix[1][0];
 			
 			determinant = ad - bc;
 		}
 		//BaseCase 3
 		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 3) {
-			double aei, bfg, cdh, afh, bdi, ceg;
-			aei = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(2);
-			bfg = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(0);
-			cdh = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(1);
+		double aei, bfg, cdh, afh, bdi, ceg;
+		aei = matrix[0][0] * matrix[1][1] * matrix[2][2];
+		bfg = matrix[0][1] * matrix[1][2] * matrix[2][0];
+		cdh = matrix[0][2] * matrix[1][0] * matrix[2][1];
+			afh = matrix[0][0] *  matrix[1][2] *  matrix[2][1];
+		bdi = matrix[0][1] * matrix[1][0] * matrix[2][2];
+		ceg = matrix[0][2] * matrix[1][1] *  matrix[2][0];
 			
-			afh = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(1);
-			bdi = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(2);
-			ceg = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(0);
+			determinant = matrix[0][0] * matrix[1][1] * matrix[2][2];
+		}
+		//BaseCase 4
+		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 4) {
 			
-			determinant = aei + bfg + cdh - afh - bdi - ceg;
+			
+			determinant = matrix[0][0] * matrix[1][1] * matrix[2][2] * matrix[3][3];
 		}
 		
 		//TODO formula for getting determinant
 		return determinant;
+	}
+	public void printMatrix(double [][] matrix){
+		System.out.println("Reduced Echolon Form:");
+		for(int i=0;i<dimension;i++){
+			for(int j=0;j<dimension;j++){
+				System.out.print(matrix[i][j] +" " +"|");
+			}
+			System.out.println();
+		}
 	}
 	
 	public Matrix inverse() {
