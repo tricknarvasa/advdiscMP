@@ -53,6 +53,21 @@ public class Matrix {
 		//TODO edit this if necessary
 		return this;
 	}
+	
+	public double det() {
+		double determinant;
+		
+		//TODO Gauss Jordan
+		//TODO Getting determinant
+		
+		return determinant;
+	}
+	
+	public Matrix inverse() {
+		//TODO this function
+		
+		return this;
+	}
 
 	public ArrayList<Vector> getVectors() {
 		return Vectors;
