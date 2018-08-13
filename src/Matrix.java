@@ -55,11 +55,39 @@ public class Matrix {
 	}
 	
 	public double det() {
-		double determinant;
+		double determinant = 0;
 		
 		//TODO Gauss Jordan
-		//TODO Getting determinant
 		
+		
+		//TODO Getting determinant
+		//BaseCase 1
+		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1) {
+			determinant = this.getVectors(0).getVector(0);
+		}
+		//BaseCase 2
+		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 2) {
+			double ad, bc;
+			ad = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1);
+			bc = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0);
+			
+			determinant = ad - bc;
+		}
+		//BaseCase 3
+		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 3) {
+			double aei, bfg, cdh, afh, bdi, ceg;
+			aei = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(2);
+			bfg = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(0);
+			cdh = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(1);
+			
+			afh = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(1);
+			bdi = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(2);
+			ceg = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(0);
+			
+			determinant = aei + bfg + cdh - afh - bdi - ceg;
+		}
+		
+		//TODO formula for getting determinant
 		return determinant;
 	}
 	
