@@ -162,7 +162,7 @@ public class Matrix {
 		//TODO formula for getting determinant
 		
 		//formula for the first 3 cases
-		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1 || this.getDimension() == 2 || this.getDimension() == 3) {
+		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1 || this.getDimension() == 2 || this.getDimension() == 3) {
 			double[] adder, subtractor;
 			adder = new double[this.getDimension()];
 			subtractor = new double [this.getDimension()];
