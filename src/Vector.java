@@ -64,7 +64,7 @@ public class Vector {
 			}
 			else if(i<dimension){
 			for(int j=0; j<dimension; j++){
-				matrix[j][i]= vectors.get(i).getVector(j);
+				matrix[i][j]= vectors.get(i).getVector(j);
 				}
 			}
 		}

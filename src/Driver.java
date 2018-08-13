@@ -3,9 +3,9 @@ public class Driver {
 
 	public static void main(String[] args) {
 		//list 
-		double[] a= new double[]{1,2,3};
-		double[] b= new double[]{1,4,6};
-		double[] c= new double[]{2,-3,-5};
+		double[] a= new double[]{1,1,2};
+		double[] b= new double[]{2,4,-3};
+		double[] c= new double[]{3,6,-5};
 		double[] d= new double[]{9,1,0};
 		
 		//arraylist of vectors
