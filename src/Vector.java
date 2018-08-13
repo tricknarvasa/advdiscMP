@@ -41,6 +41,12 @@ public class Vector {
 		return this;
 	}
 	
+	public static boolean isSolvable (List<Vector> vectors, Vector constants) {
+		if (vectors.size() == constants.getVector().length)
+			return true;
+		else
+			return false;
+	}
 	
 	
 	public Vector Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
@@ -49,6 +55,7 @@ public class Vector {
 		double matrix[][]=new double[dimension][dimension+1];
 		double x=0,temp;
 		int pointer, k=0;
+		if(isSolvable(vectors, constants)){
 		//transform into matrix
 		for(int i=0; i<=dimension; i++){
 			if(i== dimension){
@@ -97,6 +104,8 @@ public class Vector {
 					finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
 				}
 				return finalanswer;
+		}
+		else return null;
 	}
 	
 	//print
