@@ -160,6 +160,37 @@ public class Matrix {
 		}
 		
 		//TODO formula for getting determinant
+		
+		//formula for the first 3 cases
+		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1 || this.getDimension() == 2 || this.getDimension() == 3) {
+			double[] adder, subtractor;
+			adder = new double[this.getDimension()];
+			subtractor = new double [this.getDimension()];
+			
+			//for adder
+			for (int i = 0; i < this.getDimension(); i++)
+				for (int j = 0; j < this.getDimension(); j++) {
+					if (j == 0)
+						adder[i] = this.getVectors(j).getVector(i);
+					else
+						adder[i] *= this.getVectors(j).getVector((i+j)%(this.getDimension()-1));
+ 				}
+			
+			//for subtractor
+			for (int i = 0; i < this.getDimension(); i++)
+				for (int j = 0; j < this.getDimension(); j++) {
+					if (j == 0)
+						subtractor[i] = this.getVectors(j).getVector(i);
+					else
+						subtractor[i] = this.getVectors(j).getVector(Math.abs(i-j)%(this.getDimension()-1));
+				}
+			
+			//adding & subtracting all
+			for (int i = 0; i < this.getDimension(); i++) {
+				determinant += adder[i];
+				determinant -= subtractor[i];
+			}
+		}
 		return determinant;
 	}
 	public void printMatrix(double [][] matrix){
