@@ -20,7 +20,7 @@ public class Driver {
 		Vector Solution= new Vector(3);
 		//Adding Vectors in List arrangement below:
 		// [1 3  1]
-		// [1 -2 2]
+		// [1 -2 -1]
 		// [2 1  2]
 		vectors.add(A);
 		vectors.add(B);
