@@ -32,6 +32,12 @@ public class Vector {
 		
 		return this;
 	}
+	public Vector divide(double scalar){
+		for (int i = 0; i < this.dimension; i++)
+			this.vector[i] /= scalar;
+		
+		return this;
+	}
 	
 	//Vector Add
 	public Vector add(Vector addend) {
@@ -41,6 +47,30 @@ public class Vector {
 		return this;
 	}
 	
+	public double [][] swap(double [][] matrix, int index1, int index2){
+
+		double temp;
+		for(int i=0; i<dimension+1; i++){
+			temp= matrix[index1][i];
+			matrix[index1][i]= matrix[index2][i];
+			matrix[index2][i]=temp;
+		}
+		return matrix;
+	}
+	
+	public double [][] addVectors(double [][] matrix, int index1, int index2, double multiplier){
+
+		double temp;
+		for(int i=0; i<dimension+1; i++){
+			temp= matrix[index1][i]*(multiplier);
+		matrix[index2][i]= matrix[index2][i] + temp;
+			
+			
+		}
+		return matrix;
+	}
+	
+	
 	public static boolean isSolvable (List<Vector> vectors, Vector constants) {
 		if (vectors.size() == constants.getVector().length)
 			return true;
@@ -49,12 +79,17 @@ public class Vector {
 	}
 	
 	
-	public Vector Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
+	public void Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
 		
-		Vector finalanswer= new Vector(dimension);
 		double matrix[][]=new double[dimension][dimension+1];
 		double x=0,temp;
-		int pointer, k=0;
+		int pivotrow=0;
+		int pivotcol=0;
+		double multiplier;
+		double dividend;
+		boolean flag=false;
+		
+		//1. Check if Solvable
 		if(isSolvable(vectors, constants)){
 		//transform into matrix
 		for(int i=0; i<=dimension; i++){
@@ -69,44 +104,58 @@ public class Vector {
 			}
 		}
 		
-		//Gauss Jordan Operation
-		for(int i=0;i<dimension; i++){
-			
-			if(matrix[i][i]==0){
-				pointer=1;
-				while(matrix[i+pointer][i]==0 && (i+pointer)<dimension)
-					pointer+=1;
-				if(i+pointer == dimension)
-					break;
-				
-				for(int j= i; k<=dimension; k++){
-					temp= matrix[j][k];
-					matrix[j][k] = matrix[j+pointer][k];
-					matrix[j+pointer][k]= temp;
-					
-							}
-					}
-				//Reduced Matrix
-				//row echolon form
-				for(int j=0;j<dimension; j++){
-				
-					if(j!= i){
-						x= matrix[j][i] / matrix[i][i];
-					
-					}
-					for(int y=0; y<=dimension;y++){
-						matrix[j][y]-= (matrix[i][y]* x);
-					}
-				}
-			}
-				this.printMatrix(matrix);
-		//transfer final solution
-				for(int i=0; i<dimension; i++){
-					finalanswer.vector[i]= (matrix[i][dimension] /matrix[i][i]);
-				}
-				return finalanswer;
 		}
-		else return null;
+
+		//2. Gauss_Jordan
+		for(int i=0; i<dimension; i++){
+
+			for(int j=0; j<dimension+1;j++){
+			
+				if(j==i){
+					if(matrix[pivotrow][pivotcol]!=1 || matrix[pivotrow][pivotcol]== 0){
+						if(matrix[0][0]!=1){
+						for(int checkpivot=pivotrow;checkpivot<dimension;checkpivot++){
+							if(matrix[checkpivot][pivotcol]==1){
+							
+								matrix=swap(matrix,pivotrow,checkpivot);
+								
+								break;
+							}
+						
+							}
+						}
+						else{
+							for(int g=j;g<dimension+1;g++){
+							dividend= matrix[i][j];
+							matrix[i][g]= matrix[i][g]/dividend;
+							}
+						}
+					}
+					if( i==pivotrow && j== pivotcol){
+						for(int k=i+1; k<dimension;k++){
+							if(matrix[k][j]!=0){
+								multiplier= (matrix[k][j]/ matrix[i][j]);
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1)
+									multiplier*=-1;
+								matrix= addVectors(matrix,i,k,multiplier);
+							}
+							
+						}
+						
+					}
+					
+					flag=true;
+				}
+				
+			}
+			if(flag){
+			pivotrow+=1;
+			pivotcol+=1;
+			flag= false;
+			}
+		}
+		System.out.println("Row Echolon Form:");
+		printMatrix(matrix);
 	}
 	
 	//print
@@ -116,7 +165,7 @@ public class Vector {
 		}
 	}
 	public void printMatrix(double [][] matrix){
-		System.out.println("Reduced Echolon Form:");
+	
 		for(int i=0;i<dimension;i++){
 			for(int j=0;j<dimension;j++){
 				System.out.print(matrix[i][j] +" " +"|");
