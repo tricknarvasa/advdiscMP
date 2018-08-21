@@ -9,11 +9,13 @@ public class Driver {
 //		double[] d= new double[]{2,1,0,1};
 //		double[] e= new double[]{1,5,2,3};
 		
-		double[] a= new double[]{1,3,1};
-		double[] b= new double[]{1,-2,-1};
-		double[] c= new double[]{2,1,2};
-		double[] d= new double[]{10,-6,10};
-
+		double[] a= new double[]{2,4,1};
+		double[] b= new double[]{-1,1,-1};
+		double[] c= new double[]{1,4,0};
+//		double[] d= new double[]{10,-6,10};
+		
+//		double[] a= new double[]{1,3};
+//		double[] b= new double[]{2,5};
 	
 		
 		//arraylist of vectors
@@ -28,7 +30,7 @@ public class Driver {
 		Vector A = new Vector(a,3);
 		Vector B= new Vector (b,3);
 		Vector C= new Vector(c,3);
-		Vector D= new Vector(d,3);
+		//Vector D= new Vector(d,3);
 		//Vector that will contain solution for Gauss Jordan
 		Vector Solution= new Vector(3);
 		//Adding Vectors in List arrangement below:
@@ -43,10 +45,11 @@ public class Driver {
 		// [1 3  1][10]
 		// [1 -2 2][-6]
 		// [2 1  2][10]
-		Solution.Gauss_Jordan(vectors, 3, D);
+		
 	
 		//Solution.printVector();
-//		Matrix m= new Matrix(vectors,3);
-//		System.out.println("determinant is:"+ m.det());
+		Matrix m= new Matrix(vectors,3);
+		m=m.inverse();
+
 	}
 }

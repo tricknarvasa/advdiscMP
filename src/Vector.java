@@ -50,7 +50,7 @@ public class Vector {
 	public double [][] swap(double [][] matrix, int index1, int index2){
 
 		double temp;
-		for(int i=0; i<dimension+1; i++){
+		for(int i=0; i<dimension; i++){
 			temp= matrix[index1][i];
 			matrix[index1][i]= matrix[index2][i];
 			matrix[index2][i]=temp;
@@ -61,7 +61,7 @@ public class Vector {
 	public double [][] addVectors(double [][] matrix, int index1, int index2, double multiplier){
 
 		double temp;
-		for(int i=0; i<dimension+1; i++){
+		for(int i=0; i<dimension; i++){
 			temp= matrix[index1][i]*(multiplier);
 	
 			matrix[index2][i]= matrix[index2][i] + temp;
@@ -214,14 +214,11 @@ public double[][] RRE(double[][] matrix, int dimension){
 			flag= false;
 			}
 		}
-		System.out.println("Reduce Row Echolon Form:");
-		printMatrix(matrix);
-		System.out.println(matrix[0][3]);
-		System.out.println(matrix[1][3]);
-		System.out.println(matrix[2][3]);
+		
 		return matrix;
 	}
 	
+
 	//print
 	public void printVector(){
 		for(int i=0; i< dimension; i++){
@@ -264,6 +261,9 @@ public double[][] RRE(double[][] matrix, int dimension){
 
 	public void setVector(double vector, int index) {
 		this.vector[index] = vector;
+	}
+	public void setVectorArray(double [] vector) {
+		this.vector = vector;
 	}
 
 	public int getDimension() {

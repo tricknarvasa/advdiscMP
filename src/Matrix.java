@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Matrix {
+public class Matrix{
 
 	private ArrayList<Vector> Vectors;
 	private int dimension;
@@ -62,65 +62,217 @@ public class Matrix {
 		else
 			return false;
 	}
-	
-	
-	public double[][] Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
-		
-		
-		double matrix[][]=new double[dimension][dimension+1];
-		double x=0,temp;
-		int pointer, k=0;
-		if(isSolvable(vectors, constants)){
-		//transform into matrix
-		for(int i=0; i<=dimension; i++){
-			if(i== dimension){
-				for(int j=0; j<dimension; j++)
-				matrix[j][i]=constants.getVector(j);
-			}
-			else if(i<dimension){
-			for(int j=0; j<dimension; j++){
-				matrix[i][j]= vectors.get(i).getVector(j);
-				}
-			}
+	public double [][] swap(double [][] matrix, int index1, int index2){
+
+		double temp;
+		for(int i=0; i<dimension; i++){
+			temp= matrix[index1][i];
+			matrix[index1][i]= matrix[index2][i];
+			matrix[index2][i]=temp;
 		}
 		
-		//Gauss Jordan Operation
-		for(int i=0;i<dimension; i++){
-			
-			if(matrix[i][i]==0){
-				pointer=1;
-				while(matrix[i+pointer][i]==0 && (i+pointer)<dimension)
-					pointer+=1;
-				if(i+pointer == dimension)
-					break;
-				
-				for(int j= i; k<=dimension; k++){
-					temp= matrix[j][k];
-					matrix[j][k] = matrix[j+pointer][k];
-					matrix[j+pointer][k]= temp;
-					
-							}
-					}
-				//Reduced Matrix
-				//row echolon form
-				for(int j=0;j<dimension; j++){
-				
-					if(j!= i){
-						x= matrix[j][i] / matrix[i][i];
-					
-					}
-					for(int y=0; y<=dimension;y++){
-						matrix[j][y]-= (matrix[i][y]* x);
-					}
-				}
-			}
-				
-		//transfer final solution
-				return matrix;
-		}
-		else return null;
+		return matrix;
 	}
+	public double [][] addVectors(double [][] matrix, int index1, int index2, double multiplier){
+
+		double temp;
+		for(int i=0; i<dimension; i++){
+			temp= matrix[index1][i]*(multiplier);
+			
+			matrix[index2][i]= matrix[index2][i] + temp;
+			
+			
+		}
+		
+		return matrix;
+	}
+
+	public double[][] GJforInverse(double[][] matrix, double [][] inverse,int dimension){
+		
+	
+		double x=0,temp;
+		int pivotrow=0;
+		int pivotcol=0;
+		double multiplier;
+		double dividend;
+		boolean flag=false;
+		boolean f=true;
+	
+		
+		for(int i=0; i<dimension; i++){
+
+			for(int j=0; j<dimension;j++){
+			
+			if(j==i){
+				if(matrix[pivotrow][pivotcol]!=1 || matrix[pivotrow][pivotcol]== 0){
+						if(matrix[pivotrow][pivotcol]!=1){
+						for(int checkpivot=pivotrow;checkpivot<dimension;checkpivot++){
+							if(matrix[checkpivot][pivotcol]==1){
+								matrix=swap(matrix,pivotrow,checkpivot);
+								inverse=swap(inverse,pivotrow,checkpivot);
+								f=false;
+								break;
+							}
+							else{
+								f=true;
+							}
+						
+							}
+						}
+						if(f==true && matrix[pivotrow][pivotcol]!= -1 ){
+								dividend= matrix[i][j];
+								for(int g=0;g<dimension;g++){
+									matrix[i][g]= matrix[i][g]/dividend;
+									inverse[i][g]=inverse[i][g]/dividend;
+								}
+							f=false;
+						}
+						
+						if(f==true && matrix[pivotrow][pivotcol]== -1 ){
+							
+							for(int g=0;g<dimension;g++){
+							
+								
+								matrix[i][g]= matrix[i][g]*	-1.0;
+								inverse[i][g]= inverse[i][g]*-1.0;
+								
+							}
+						}
+					}
+					if( i==pivotrow && j== pivotcol){
+						for(int k=i+1; k<dimension;k++){
+							if(matrix[k][j]!=0){
+								multiplier= (matrix[k][j]/ matrix[i][j]);
+								
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1 && matrix[k][j]/(matrix[k][j]*-1) != 0 )
+									multiplier*=-1;
+							
+								matrix= addVectors(matrix,i,k,multiplier);
+								
+								inverse= addVectors(inverse,i,k,multiplier);
+								
+							}
+							
+						}
+						
+					}
+					
+						flag=true;
+					}
+				}
+				if(flag){
+				pivotrow+=1;
+				pivotcol+=1;
+				flag= false;
+				}
+			}
+			
+		
+		inverse= RREforInverse(matrix,inverse,dimension);
+		
+		return inverse;
+}
+	public double[][] RREforInverse(double[][] matrix, double[][] inverse,int dimension){
+		
+		
+		double x=0,temp;
+		int pivotrow=dimension-1;
+		int pivotcol=dimension-1;
+		double multiplier;
+		double dividend;
+		boolean flag=false;
+		
+		//1. Check if Solvable
+		
+		//2. Gauss_Jordan
+		for(int i=pivotrow; i>=0; i--){
+
+			for(int j=pivotcol; j>=0;j--){
+			
+				if(j==i){
+					
+					if( i==pivotrow && j== pivotcol){
+					
+						for(int k=i-1; k>=0;k--){
+							if(matrix[k][j]!=0){
+								
+								multiplier= (matrix[k][j]/ matrix[i][j]);
+								
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1)
+									multiplier*=-1;
+								
+								matrix= addVectors(matrix,i,k,multiplier);
+								inverse=addVectors(inverse,i,k,multiplier);
+							}
+							
+						}
+						
+					}
+					
+					flag=true;
+				}
+				
+			}
+			if(flag){
+			pivotrow-=1;
+			pivotcol-=1;
+			flag= false;
+			}
+		}
+		
+	
+		return inverse;
+		
+	}
+	
+	
+	public void printMatrix(double [][] matrix){
+		for(int i=0;i<dimension;i++){
+			for(int j=0;j<dimension;j++){
+				System.out.print(matrix[i][j] +" " +"|");
+			}
+			System.out.println();
+		}
+	}
+	
+	
+	public Matrix inverse() {
+		
+		double matrix[][]=new double[dimension][dimension];
+		double inverse[][]= new double[dimension][dimension];
+		Matrix inverseMatrix= new Matrix(dimension);
+		Vector tobeadded= new Vector(dimension);
+		
+		//create identity matrix
+		for(int i=0; i<dimension; i++){
+			for(int j=0; j<dimension; j++){
+				if(i==j){
+					inverse[i][j]=1.0;
+				}
+				else
+					inverse[i][j]=0.0;
+				}
+		}
+		//transform into 2D Array
+		for(int i=0; i<dimension; i++){
+			for(int j=0; j<dimension; j++){
+				matrix[i][j]= Vectors.get(i).getVector(j);
+				}
+			
+		}
+		inverse= GJforInverse(matrix,inverse,dimension);
+		
+		for(int i=0; i<dimension; i++){
+			tobeadded.setVectorArray(inverse[i]);
+			inverseMatrix.Vectors.add(tobeadded);
+		}
+		
+		return inverseMatrix;
+		
+	}
+
 	public double det() {
+
 //		Vector tempCon= new Vector(dimension);
 //		double[][] matrix;
 //		matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
@@ -171,22 +323,6 @@ public class Matrix {
 		
 		return determinant;
 	}
-	public void printMatrix(double [][] matrix){
-		System.out.println("Reduced Echolon Form:");
-		for(int i=0;i<dimension;i++){
-			for(int j=0;j<dimension;j++){
-				System.out.print(matrix[i][j] +" " +"|");
-			}
-			System.out.println();
-		}
-	}
-	
-	public Matrix inverse() {
-		//TODO this function
-		
-		return this;
-	}
-
 	public ArrayList<Vector> getVectors() {
 		return Vectors;
 	}
