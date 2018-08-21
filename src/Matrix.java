@@ -37,9 +37,29 @@ public class Matrix{
 
 		//if the other is 1x1 matrix
 		if (other.getDimension() == other.getVectors(0).getDimension())
-			for (int i = 0; i < this.dimension; i++)
+			for (int i = 0; i < this.dimension; i++) {
 				this.getVectors(i).scale(other.getVectors(0).getVector(0));
-		else if ()
+				return this;
+			}
+		//if this row == other column
+		else if (this.getVectors(0).getDimension() == other.getDimension()) {
+			//if the resulting matrix is a square matrix
+			if (this.getDimension() == other.getVectors(0).getDimension()) {
+				//create temp matrix
+				ArrayList<Vector> newVectors = new ArrayList<>();
+				for (int i = 0; i < this.getDimension(); i++) {
+					newVectors.add(new Vector(this.getDimension()));
+				}
+				
+				for (int i = 0; i < this.getDimension(); i++)
+					for (int j = 0; j < this.getDimension(); j++)
+						for (int k = 0; k < other.getDimension(); k++)
+							newVectors.get(j).setVector(newVectors.get(j).getVector(i) + (this.getVectors(j).getVector(k) * other.getVectors(k).getVector(j)), i);
+				
+				return new Matrix(newVectors, newVectors.size());
+			}
+		}
+		else return null;
 		
 //		Matrix product;
 //		double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
