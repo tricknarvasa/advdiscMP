@@ -40,9 +40,10 @@ public class Matrix{
 		int size=0;
 		
 		//if the other is 1x1 matrix
-		if (other.getDimension() == other.getVectors(0).getDimension())
+		if (other.getDimension() == other.getVectors(0).getDimension() && other.getDimension()==1)
 			for (int i = 0; i < this.dimension; i++) {
 				this.getVectors(i).scale(other.getVectors(0).getVector(0));
+				
 				return this;
 			}
 		
@@ -58,31 +59,55 @@ public class Matrix{
 				
 				for (int i = 0; i < this.getDimension(); i++)
 					for (int j = 0; j < this.getDimension(); j++)
-						for (int k = 0; k < other.getDimension(); k++)
-							newVectors.get(j).setVector(newVectors.get(j).getVector(i) + (this.getVectors(j).getVector(k) * other.getVectors(k).getVector(j)), i);
+						for (int k = 0; k < other.getDimension(); k++){
+							newVectors.get(j).setVector(newVectors.get(j).getVector(i) + 
+									(this.getVectors(j).getVector(k) * other.getVectors(k).getVector(j)), i);
 				
+						}
 					mMatrix= newVectors;
 					size= newVectors.size();
 				
 			}
 		}
-		else if (this.Vectors.size() != other.Vectors.get(0).getlength() && 
+		// if this row != other column
+		else if (this.Vectors.size() == other.Vectors.get(0).getlength() && 
 				other.Vectors.size() == this.Vectors.get(0).getlength()){
+			
 			double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
 			double[][] b = new double[other.Vectors.size()][other.Vectors.get(0).getlength()];
 			double[][] prod= new double[this.Vectors.size()][other.Vectors.get(0).getlength()];
 			
-			for(int i=0; i<this.Vectors.size();i++){
-				for(int j=0; j< this.Vectors.get(0).getlength(); j++){
-					prod[i][j]+= (a[i][j] * b[j][i]);
+			for(int i=0;i<this.Vectors.size();i++){
+				for(int j=0;j<this.Vectors.get(0).getlength();j++){
+					a[i][j]=this.Vectors.get(i).getVector(j);
 				}
 			}
+		
+			for(int i=0;i<other.Vectors.size();i++){
+				for(int j=0;j<other.Vectors.get(0).getlength();j++){
+					b[i][j]=other.Vectors.get(i).getVector(j);
+				}
+			}
+			
+			for(int i=0; i<this.Vectors.size();i++){
+				for(int j=0; j< this.Vectors.get(0).getlength(); j++){
+					for(int k=0; k< this.Vectors.size();k++){
+						for(int x=0;x<this.Vectors.get(0).getlength();x++){
+							prod[i][j]+= (a[j][x] * b[x][k]);
+							
+						}
+					
+					}
+				}
+			}
+			printMatrix(prod);
+			
 			
 			for(int i=0; i<this.Vectors.size();i++){
 				tobeadded= new Vector(prod[i],dimension);
 				mMatrix.add(tobeadded);
 				}
-			
+			size= this.Vectors.size();
 			
 		}
 			else{
