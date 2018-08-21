@@ -21,11 +21,8 @@ public class Matrix{
 		else {
 			//initializing Vectors ArrayList
 			this.Vectors = new ArrayList<>();
-			
 			//transfers list to Vectors
-			for (int i = 0; i < list.size(); i++) {
-				Vectors.add(list.get(i));
-			}
+			Vectors= list;
 
 			this.dimension = dimension;
 		}
@@ -46,8 +43,10 @@ public class Matrix{
 		}
 		
 		
-		else
+		else{
+			System.out.print("size mismatch");
 			return null;
+		}
 	}
 	
 	//Gauss Jordan Matrix
@@ -233,7 +232,8 @@ public class Matrix{
 		
 		double matrix[][]=new double[dimension][dimension];
 		double inverse[][]= new double[dimension][dimension];
-		Matrix inverseMatrix= new Matrix(dimension);
+		Matrix inverseMatrix;
+		ArrayList<Vector> iMatrix = new ArrayList<>();
 		Vector tobeadded= new Vector(dimension);
 		
 		if(this.det()!= 0){ //checks if matrix has inverse
@@ -256,10 +256,12 @@ public class Matrix{
 			}
 			inverse= GJforInverse(matrix,inverse,dimension);
 		
-			for(int i=0; i<dimension; i++){//transforms back into matrix
-				tobeadded.setVectorArray(inverse[i]);
-				inverseMatrix.Vectors.add(tobeadded);
-			}
+			for(int i=0; i<dimension;i++){
+				tobeadded= new Vector(inverse[i],dimension);
+				iMatrix.add(tobeadded);
+				}
+			
+			inverseMatrix= new Matrix(iMatrix,this.getDimension());
 		
 			return inverseMatrix;
 		}
@@ -335,7 +337,7 @@ public class Matrix{
 		return determinant;
 	}
 	
-	//Setters Getters
+	
 	public double det() {
 		double matrix[][]=new double[dimension][dimension];
 		double determinant=1;
@@ -364,6 +366,44 @@ public class Matrix{
 			return '0';
 		}
 	}
+	
+	public Matrix transpose(){
+		double [][] matrix= new double[this.getDimension()][this.Vectors.get(0).getlength()];
+		double [][] transposedmatrix= new double[this.Vectors.get(0).getlength()][this.getDimension()];
+		ArrayList<Vector> tMatrix = new ArrayList<>();
+		Vector thisvec= new Vector(this.dimension);
+		
+		
+		
+		for(int i=0; i<dimension; i++){ //transform into 2D Array
+			for(int j=0; j<dimension; j++){
+				matrix[i][j]= Vectors.get(i).getVector(j);
+				}
+		
+		}
+	
+		for(int i=0;i<this.getDimension();i++){
+			for(int j=0; j< this.Vectors.get(0).getlength(); j++){
+				transposedmatrix[j][i]= matrix[i][j];
+			}
+						
+		}
+		
+		printMatrix(transposedmatrix);
+		
+		for(int i=0; i<this.Vectors.get(0).getlength();i++){
+			thisvec= new Vector(transposedmatrix[i],this.getDimension());
+			tMatrix.add(thisvec);
+			}
+		
+		Matrix transmat= new Matrix(tMatrix,this.getDimension());
+		System.out.print(tMatrix.get(0).getVector(0));
+		
+		return transmat;
+	
+		
+	}
+	//Setters Getters
 	public ArrayList<Vector> getVectors() {
 		return Vectors;
 	}

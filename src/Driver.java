@@ -50,7 +50,8 @@ public class Driver {
 		//Solution.printVector();
 		Matrix m= new Matrix(vectors,2);
 		
-		m.inverse();
+		m.transpose();
+		
 
 	}
 }
