@@ -121,76 +121,54 @@ public class Matrix {
 		else return null;
 	}
 	public double det() {
+//		Vector tempCon= new Vector(dimension);
+//		double[][] matrix;
+//		matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
+//		this.printMatrix(matrix);
+		
 		double determinant = 0;
-		Vector tempCon= new Vector(dimension);
-		double[][] matrix;
-		//TODO Gauss Jordan
-		matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
-		this.printMatrix(matrix);
+		
 		//TODO Getting determinant
 		//BaseCase 1
 		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1) {
-			determinant = matrix[0][0];
+			determinant = this.getVectors(0).getVector(0);
 		}
 		//BaseCase 2
 		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 2) {
 			double ad, bc;
-			ad = matrix[0][0] * matrix[1][1];
-			bc =matrix[0][1]*matrix[1][0];
+			ad = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1);
+			bc = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0);
 			
 			determinant = ad - bc;
 		}
 		//BaseCase 3
 		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 3) {
-		double aei, bfg, cdh, afh, bdi, ceg;
-		aei = matrix[0][0] * matrix[1][1] * matrix[2][2];
-		bfg = matrix[0][1] * matrix[1][2] * matrix[2][0];
-		cdh = matrix[0][2] * matrix[1][0] * matrix[2][1];
-			afh = matrix[0][0] *  matrix[1][2] *  matrix[2][1];
-		bdi = matrix[0][1] * matrix[1][0] * matrix[2][2];
-		ceg = matrix[0][2] * matrix[1][1] *  matrix[2][0];
+			double aei, bfg, cdh, afh, bdi, ceg;
 			
-			determinant = matrix[0][0] * matrix[1][1] * matrix[2][2];
+			aei = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(2);
+			bfg = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(0);
+			cdh = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(1);
+			
+			afh = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(1);
+			bdi = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(2);
+			ceg = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(0);
+			
+			determinant = aei + bfg + cdh - afh - bdi - ceg;
 		}
 		//BaseCase 4
-		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 4) {
+		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() > 3) {
+			//TODO gauss-jordan the matrix first
+			//TODO row echelon gj will be used
 			
-			
-			determinant = matrix[0][0] * matrix[1][1] * matrix[2][2] * matrix[3][3];
-		}
-		
-		//TODO formula for getting determinant
-		
-		//formula for the first 3 cases
-		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1 || this.getDimension() == 2 || this.getDimension() == 3) {
-			double[] adder, subtractor;
-			adder = new double[this.getDimension()];
-			subtractor = new double [this.getDimension()];
-			
-			//for adder
-			for (int i = 0; i < this.getDimension(); i++)
-				for (int j = 0; j < this.getDimension(); j++) {
-					if (j == 0)
-						adder[i] = this.getVectors(j).getVector(i);
-					else
-						adder[i] *= this.getVectors(j).getVector((i+j)%(this.getDimension()-1));
- 				}
-			
-			//for subtractor
-			for (int i = 0; i < this.getDimension(); i++)
-				for (int j = 0; j < this.getDimension(); j++) {
-					if (j == 0)
-						subtractor[i] = this.getVectors(j).getVector(i);
-					else
-						subtractor[i] = this.getVectors(j).getVector(Math.abs(i-j)%(this.getDimension()-1));
-				}
-			
-			//adding & subtracting all
+			//diagonal multiplication for det after row echelon
 			for (int i = 0; i < this.getDimension(); i++) {
-				determinant += adder[i];
-				determinant -= subtractor[i];
+				if (determinant == 0.0)
+					determinant = this.getVectors(i).getVector(i);
+				else
+					determinant *= this.getVectors(i).getVector(i);
 			}
 		}
+		
 		return determinant;
 	}
 	public void printMatrix(double [][] matrix){
