@@ -33,14 +33,19 @@ public class Matrix{
 	}
 	
 	//Matrix multiplication
-	public Matrix times(Matrix other) {
+	public Matrix times (Matrix other) {
 		Matrix product;
+		ArrayList<Vector> mMatrix = new ArrayList<>();
+		Vector tobeadded= new Vector(dimension);
+		int size=0;
+		
 		//if the other is 1x1 matrix
 		if (other.getDimension() == other.getVectors(0).getDimension())
 			for (int i = 0; i < this.dimension; i++) {
 				this.getVectors(i).scale(other.getVectors(0).getVector(0));
 				return this;
 			}
+		
 		//if this row == other column
 		else if (this.getVectors(0).getDimension() == other.getDimension()) {
 			//if the resulting matrix is a square matrix
@@ -56,7 +61,9 @@ public class Matrix{
 						for (int k = 0; k < other.getDimension(); k++)
 							newVectors.get(j).setVector(newVectors.get(j).getVector(i) + (this.getVectors(j).getVector(k) * other.getVectors(k).getVector(j)), i);
 				
-				return new Matrix(newVectors, newVectors.size());
+					mMatrix= newVectors;
+					size= newVectors.size();
+				
 			}
 		}
 		else if (this.Vectors.size() != other.Vectors.get(0).getlength() && 
@@ -71,21 +78,24 @@ public class Matrix{
 				}
 			}
 			
-			for(int i=0; i<dimension;i++){
-				tobeadded= new Vector(inverse[i],dimension);
-				iMatrix.add(tobeadded);
+			for(int i=0; i<this.Vectors.size();i++){
+				tobeadded= new Vector(prod[i],dimension);
+				mMatrix.add(tobeadded);
 				}
 			
-			product= new Matrix(iMatrix,this.getDimension());
 			
+		}
 			else{
 				System.out.print("size mismatch");
 				return null;
 			}
-
 		
+		product= new Matrix(mMatrix,size);	
+		return product;
+	
 
 	}
+		
 	
 	//Gauss Jordan Matrix
 	public static boolean isSolvable (List<Vector> vectors, Vector constants) {
