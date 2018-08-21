@@ -1,6 +1,6 @@
 //EMBESTRO, Eric
 //NARVASA, Patrick
-//ADVDISC S18 MP 1
+//ADVDISC S18 MP 2
 import java.util.*;
 
 public class Vector {

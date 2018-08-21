@@ -1,3 +1,6 @@
+//EMBESTRO, Eric
+//NARVASA, Patrick
+//ADVDISC S18 MP 2
 import java.util.ArrayList;
 import java.util.List;
 
@@ -272,6 +275,7 @@ public class Matrix{
 		}
 	}
 	
+	
 	public double GJforDet(double[][]matrix, int dimension){ //This  function finds the determinant using Gauss Jordan
 	
 		
@@ -337,7 +341,7 @@ public class Matrix{
 		return determinant;
 	}
 	
-	
+	//find determinant
 	public double det() {
 		double matrix[][]=new double[dimension][dimension];
 		double determinant=1;
@@ -367,6 +371,7 @@ public class Matrix{
 		}
 	}
 	
+	//Tranpose
 	public Matrix transpose(){
 		double [][] matrix= new double[this.getDimension()][this.Vectors.get(0).getlength()];
 		double [][] transposedmatrix= new double[this.Vectors.get(0).getlength()][this.getDimension()];
