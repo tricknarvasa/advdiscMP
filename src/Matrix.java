@@ -34,28 +34,37 @@ public class Matrix{
 	
 	//Matrix multiplication
 	public Matrix times(Matrix other) {
-
+		Matrix product;
 		//if the other is 1x1 matrix
 		if (other.getDimension() == other.getVectors(0).getDimension())
 			for (int i = 0; i < this.dimension; i++)
 				this.getVectors(i).scale(other.getVectors(0).getVector(0));
-		else if ()
 		
-//		Matrix product;
-//		double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
-//		double[][] b = new double[other.Vectors.size()][other.Vectors.get(0).getlength()];
-//		double[][] prod= new double[this.Vectors.size()][other.Vectors.get(0).getlength()];
-//		if(this.Vectors.get(0).getlength()==other.Vectors.size()){
-//			
-//			
-//			return product;
-//		}
-//		
-//		
-//		else{
-//			System.out.print("size mismatch");
-//			return null;
-//		}
+		else if (this.Vectors.size() != other.Vectors.get(0).getlength() && 
+				other.Vectors.size() == this.Vectors.get(0).getlength()){
+			double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
+			double[][] b = new double[other.Vectors.size()][other.Vectors.get(0).getlength()];
+			double[][] prod= new double[this.Vectors.size()][other.Vectors.get(0).getlength()];
+			
+			for(int i=0; i<this.Vectors.size();i++){
+				for(int j=0; j< this.Vectors.get(0).getlength(); j++){
+					prod[i][j]+= (a[i][j] * b[j][i]);
+				}
+			}
+			
+			for(int i=0; i<dimension;i++){
+				tobeadded= new Vector(inverse[i],dimension);
+				iMatrix.add(tobeadded);
+				}
+			
+			product= new Matrix(iMatrix,this.getDimension());
+			
+			else{
+				System.out.print("size mismatch");
+				return null;
+			}
+
+		
 	}
 	
 	//Gauss Jordan Matrix
