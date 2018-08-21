@@ -269,6 +269,9 @@ public double[][] RRE(double[][] matrix, int dimension){
 	public int getDimension() {
 		return dimension;
 	}
+	public int getlength(){
+		return vector.length;
+	}
 
 	public void setDimension(int dimension) {
 		this.dimension = dimension;
