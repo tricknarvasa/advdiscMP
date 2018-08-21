@@ -35,24 +35,17 @@ public class Matrix{
 	//Matrix multiplication
 	public Matrix times(Matrix other) {
 		//TODO this function
+		Matrix product;
+		double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
+		double[][] b = new double[other.Vectors.size()][other.Vectors.get(0).getlength()];
+		if(this.Vectors.get(0).getlength()==other.Vectors.size()){
+			
+			return product;
+		}
 		
-		//error checking
-		if (this.dimension != other.getDimension()) {
-			System.out.println("Matrix size mismatch");
-		}
-		else {
-			for (int i = 0; i < this.dimension; i++) {
-				//TODO Change if necessary
-				for (int j = 0; j < this.Vectors.get(i).getDimension(); j++) {
-					//TODO Change if necessary
-					
-					//this.Vectors(i).Vector(j) *= Other.Vectors(i).Vector(j)
-					this.Vectors.get(i).setVector(this.Vectors.get(i).getVector(j) * other.getVectors(i).getVector(j), j);
-				}
-			}
-		}
-		//TODO edit this if necessary
-		return this;
+		
+		else
+			return null;
 	}
 	
 	//Gauss Jordan Matrix
