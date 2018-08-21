@@ -79,7 +79,7 @@ public class Vector {
 	}
 	
 	
-	public void Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
+	public double[][] Gauss_Jordan(ArrayList<Vector> vectors, int dimension, Vector constants){
 		
 		double matrix[][]=new double[dimension][dimension+1];
 		double x=0,temp;
@@ -156,6 +156,61 @@ public class Vector {
 		}
 		System.out.println("Row Echolon Form:");
 		printMatrix(matrix);
+		matrix= RRE(matrix, dimension);
+		return matrix;
+	}
+	
+public double[][] RRE(double[][] matrix, int dimension){
+		
+		
+		double x=0,temp;
+		int pivotrow=dimension-1;
+		int pivotcol=dimension-1;
+		double multiplier;
+		double dividend;
+		boolean flag=false;
+		
+		//1. Check if Solvable
+
+		//2. Gauss_Jordan
+		for(int i=pivotrow; i>=0; i--){
+	
+			for(int j=pivotcol; j>=0;j--){
+			
+				if(j==i){
+					
+					if( i==pivotrow && j== pivotcol){
+					
+						for(int k=i-1; k>=0;k--){
+							if(matrix[k][j]!=0){
+								System.out.println(matrix[k][j]);
+								multiplier= (matrix[k][j]/ matrix[i][j]);
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1)
+									multiplier*=-1;
+								
+								matrix= addVectors(matrix,i,k,multiplier);
+							}
+							
+						}
+						
+					}
+					
+					flag=true;
+				}
+				
+			}
+			if(flag){
+			pivotrow-=1;
+			pivotcol-=1;
+			flag= false;
+			}
+		}
+		System.out.println("Reduce Row Echolon Form:");
+		printMatrix(matrix);
+		System.out.println(matrix[0][3]);
+		System.out.println(matrix[1][3]);
+		System.out.println(matrix[2][3]);
+		return matrix;
 	}
 	
 	//print
