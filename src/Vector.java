@@ -63,10 +63,12 @@ public class Vector {
 		double temp;
 		for(int i=0; i<dimension+1; i++){
 			temp= matrix[index1][i]*(multiplier);
-		matrix[index2][i]= matrix[index2][i] + temp;
+	
+			matrix[index2][i]= matrix[index2][i] + temp;
 			
 			
 		}
+		
 		return matrix;
 	}
 	
@@ -88,6 +90,7 @@ public class Vector {
 		double multiplier;
 		double dividend;
 		boolean flag=false;
+		boolean f=true;
 		
 		//1. Check if Solvable
 		if(isSolvable(vectors, constants)){
@@ -113,31 +116,37 @@ public class Vector {
 			
 				if(j==i){
 					if(matrix[pivotrow][pivotcol]!=1 || matrix[pivotrow][pivotcol]== 0){
-						if(matrix[0][0]!=1){
+						if(matrix[pivotrow][pivotcol]!=1){
 						for(int checkpivot=pivotrow;checkpivot<dimension;checkpivot++){
 							if(matrix[checkpivot][pivotcol]==1){
 							
 								matrix=swap(matrix,pivotrow,checkpivot);
-								
+								f=false;
 								break;
+							}
+							else{
+								f=true;
 							}
 						
 							}
 						}
-						else{
-							for(int g=j;g<dimension+1;g++){
+						if(f){
 							dividend= matrix[i][j];
+							for(int g=0;g<dimension+1;g++){
 							matrix[i][g]= matrix[i][g]/dividend;
 							}
+							f=false;
 						}
 					}
 					if( i==pivotrow && j== pivotcol){
 						for(int k=i+1; k<dimension;k++){
 							if(matrix[k][j]!=0){
 								multiplier= (matrix[k][j]/ matrix[i][j]);
-								if(matrix[k][j]/(matrix[k][j]*-1)== -1)
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1 && matrix[k][j]/(matrix[k][j]*-1) != 0 )
 									multiplier*=-1;
 								matrix= addVectors(matrix,i,k,multiplier);
+								printMatrix(matrix);
+								System.out.println();
 							}
 							
 						}
