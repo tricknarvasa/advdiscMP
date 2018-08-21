@@ -225,7 +225,6 @@ public class Matrix{
 		
 	}
 	
-	
 	public void printMatrix(double [][] matrix){
 		for(int i=0;i<dimension;i++){
 			for(int j=0;j<dimension;j++){
@@ -234,7 +233,6 @@ public class Matrix{
 			System.out.println();
 		}
 	}
-	
 	
 	public Matrix inverse() {
 		
@@ -270,56 +268,100 @@ public class Matrix{
 		return inverseMatrix;
 		
 	}
-
-	public double det() {
-
-//		Vector tempCon= new Vector(dimension);
-//		double[][] matrix;
-//		matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
-//		this.printMatrix(matrix);
+	
+	public double GJforDet(double[][]matrix, int dimension){
 		
-		double determinant = 0;
+		double x=0,temp;
+		int pivotrow=0;
+		int pivotcol=0;
+		double multiplier;
+		double dividend;
+		boolean flag=false;
+		boolean sign=true;
+		double determinant=1;
+	
 		
-		//TODO Getting determinant
-		//BaseCase 1
-		if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1) {
-			determinant = this.getVectors(0).getVector(0);
+		for(int i=0; i<dimension; i++){
+
+			for(int j=0; j<dimension;j++){
+			
+			if(j==i){
+				if(matrix[pivotrow][pivotcol]== 0){
+					
+					for(int checkpivot=pivotrow;checkpivot<dimension;checkpivot++){
+						if(matrix[checkpivot][pivotcol]!=0){
+							matrix=swap(matrix,pivotrow,checkpivot);
+							sign=!sign;
+							break;
+						}
+						
+						}
+					
+				}
+				
+						
+					if( i==pivotrow && j== pivotcol){
+						for(int k=i+1; k<dimension;k++){
+							if(matrix[k][j]!=0){
+								multiplier= (matrix[k][j]/ matrix[i][j]);
+								
+								if(matrix[k][j]/(matrix[k][j]*-1)== -1 && matrix[k][j]/(matrix[k][j]*-1) != 0 )
+									multiplier*=-1;
+							
+								matrix= addVectors(matrix,i,k,multiplier);
+								
+								
+							}
+							
+						}
+						
+					}
+					
+						flag=true;
+					
+				}
+				
+				}
+			if(flag){
+				pivotrow+=1;
+				pivotcol+=1;
+				flag= false;
+			}
+		
 		}
-		//BaseCase 2
-		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 2) {
-			double ad, bc;
-			ad = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1);
-			bc = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0);
-			
-			determinant = ad - bc;
-		}
-		//BaseCase 3
-		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 3) {
-			double aei, bfg, cdh, afh, bdi, ceg;
-			
-			aei = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(2);
-			bfg = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(0);
-			cdh = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(1);
-			
-			afh = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(1);
-			bdi = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(2);
-			ceg = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(0);
-			
-			determinant = aei + bfg + cdh - afh - bdi - ceg;
-		}
-		//BaseCase 4
-		else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() > 3) {
-			//TODO gauss-jordan the matrix first
-			//TODO row echelon gj will be used
-			
-			//diagonal multiplication for det after row echelon
-			for (int i = 0; i < this.getDimension(); i++) {
-				if (determinant == 0.0)
-					determinant = this.getVectors(i).getVector(i);
-				else
-					determinant *= this.getVectors(i).getVector(i);
+		
+		for(int i=0;i<dimension;i++){
+			for(int j=0;j<dimension;j++){
+				if(i==j){
+					determinant*=matrix[i][j];
+				}
 			}
 		}
+		if(!sign){
+			determinant*= -1;
+		}
+		
+		
+		return determinant;
+	}
+	public double det() {
+		double matrix[][]=new double[dimension][dimension];
+		double REF[][]= new double[dimension][dimension];
+		double determinant=1;
+		boolean sign=true;
+		Matrix inverseMatrix= new Matrix(dimension);
+		Vector tobeadded= new Vector(dimension);
+		
+			for(int i=0; i<dimension; i++){
+				for(int j=0; j<dimension; j++){
+					matrix[i][j]= Vectors.get(i).getVector(j);
+				}
+			
+			}
+			
+		determinant=GJforDet(matrix,dimension);
+		
+		
 		
 		return determinant;
 	}
@@ -343,3 +385,53 @@ public class Matrix{
 		this.dimension = dimension;
 	}
 }
+
+//
+////Vector tempCon= new Vector(dimension);
+////double[][] matrix;
+////matrix= this.Gauss_Jordan(Vectors, dimension, tempCon);
+////this.printMatrix(matrix);
+//
+//double determinant = 0;
+//
+////TODO Getting determinant
+////BaseCase 1
+//if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 1) {
+//	determinant = this.getVectors(0).getVector(0);
+//}
+////BaseCase 2
+//else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 2) {
+//	double ad, bc;
+//	ad = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1);
+//	bc = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0);
+//	
+//	determinant = ad - bc;
+//}
+////BaseCase 3
+//else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() == 3) {
+//	double aei, bfg, cdh, afh, bdi, ceg;
+//	
+//	aei = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(2);
+//	bfg = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(0);
+//	cdh = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(1);
+//	
+//	afh = this.getVectors(0).getVector(0) * this.getVectors(1).getVector(2) * this.getVectors(2).getVector(1);
+//	bdi = this.getVectors(0).getVector(1) * this.getVectors(1).getVector(0) * this.getVectors(2).getVector(2);
+//	ceg = this.getVectors(0).getVector(2) * this.getVectors(1).getVector(1) * this.getVectors(2).getVector(0);
+//	
+//	determinant = aei + bfg + cdh - afh - bdi - ceg;
+//}
+////BaseCase 4
+//else if (this.getDimension() == this.getVectors(0).getDimension() && this.getDimension() > 3) {
+//	//TODO gauss-jordan the matrix first
+//	//TODO row echelon gj will be used
+//	
+//	//diagonal multiplication for det after row echelon
+//	for (int i = 0; i < this.getDimension(); i++) {
+//		if (determinant == 0.0)
+//			determinant = this.getVectors(i).getVector(i);
+//		else
+//			determinant *= this.getVectors(i).getVector(i);
+//	}
+//}
+
