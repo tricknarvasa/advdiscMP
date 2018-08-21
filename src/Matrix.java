@@ -38,7 +38,9 @@ public class Matrix{
 		Matrix product;
 		double[][] a = new double[this.Vectors.size()][this.Vectors.get(0).getlength()];
 		double[][] b = new double[other.Vectors.size()][other.Vectors.get(0).getlength()];
+		double[][] prod= new double[this.Vectors.size()][other.Vectors.get(0).getlength()];
 		if(this.Vectors.get(0).getlength()==other.Vectors.size()){
+			
 			
 			return product;
 		}
